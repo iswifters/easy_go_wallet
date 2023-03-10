@@ -1,0 +1,73 @@
+import 'package:flutter/material.dart';
+import 'package:easy_go_wallet/constants/app_textstyle.dart';
+import 'package:easy_go_wallet/constants/color_constants.dart';
+import 'package:easy_go_wallet/data/card_data.dart';
+import 'package:easy_go_wallet/data/transaction_data.dart';
+import 'package:easy_go_wallet/widgets/my_card.dart';
+import 'package:easy_go_wallet/widgets/transaction_card.dart';
+
+class HistoryScreen extends StatelessWidget {
+  const HistoryScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Easy Go",
+          style: TextStyle(
+            fontFamily: "Poppins",
+            color: kPrimaryColor,
+          ),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CircleAvatar(
+            backgroundImage:
+            NetworkImage("https://placeimg.com/640/480/people"),
+          ),
+        ),
+        actions: [
+          IconButton(
+              icon: Icon(
+                Icons.notifications_active_outlined,
+                color: Colors.black,
+                size: 27,
+              ),
+              onPressed: () {})
+        ],
+      ),
+      body: SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Recent Transactions",
+                style: ApptextStyle.BODY_TEXT,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              ListView.separated(
+                  itemCount: myTransactions.length,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  separatorBuilder: (context, index) {
+                    return SizedBox(
+                      height: 10,
+                    );
+                  },
+                  itemBuilder: (context, index) {
+                    return TransactionCard(transaction: myTransactions[index]);
+                  })
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
